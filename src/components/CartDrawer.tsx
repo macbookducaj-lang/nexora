@@ -135,7 +135,7 @@ export function CartDrawer() {
             </div>
             <button
               type="button"
-              onClick={handleCheckout}
+              onClick={() => openStripeCheckout(items)}
               className="btn-primary w-full py-3 mt-2"
             >
               Commander
