@@ -17,6 +17,23 @@ export function CartDrawer() {
     grandTotal,
     totalItems,
   } = useCart();
+  const handleCheckout = async () => {
+    try {
+      const response = await fetch('https://nexora.macbookducaj.workers.dev', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ items }), 
+      });
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        alert("Erreur Stripe : " + data.error);
+      }
+    } catch (error) {
+      alert("Impossible de joindre le serveur de paiement.");
+    }
+  };
 
   return (
     <>
@@ -118,7 +135,7 @@ export function CartDrawer() {
             </div>
             <button
               type="button"
-              onClick={openStripeCheckout}
+              onClick={handleCheckout}
               className="btn-primary w-full py-3 mt-2"
             >
               Commander
