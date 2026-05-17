@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #003082;
+  --color-primary-hover: #004494;
+  --color-primary-light: #0059a3;
+  --color-accent: #ffc515;
+  --color-success: #00a945;
+  --color-danger: #d0021b;
+  --color-orange: #ff6b00;
+  --color-bg: #f5f5f5;
+  --color-card: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #767676;
+  --color-border: #e0e0e0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', system-ui, sans-serif;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease forwards;
+}
+
+.animate-check-pop {
+  animation: checkPop 0.5s ease forwards;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary text-white font-semibold rounded transition-colors duration-150 hover:bg-primary-hover;
+  }
+
+  .btn-success {
+    @apply bg-success text-white font-semibold rounded transition-colors duration-150 hover:opacity-90;
+  }
+
+  .btn-outline {
+    @apply border-2 border-primary text-primary font-semibold rounded transition-colors duration-150 hover:bg-category-hover;
+  }
+
+  .card-coolblue {
+    @apply bg-card rounded-lg border border-border shadow-card transition-[border-color,box-shadow] duration-150;
+  }
+
+  .input-coolblue {
+    @apply w-full border-2 border-primary rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-light;
+  }
+}
