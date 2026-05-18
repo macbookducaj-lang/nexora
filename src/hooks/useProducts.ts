@@ -35,7 +35,22 @@ export function useProducts() {
   });
 }
 
-// La fonction manquante réclamée par src/pages/Catalogue.tsx
+// Hook demandé par src/pages/Category.tsx
+export function useProductsByCategory(categorySlug: string | undefined) {
+  const { data: products = [], isLoading, error } = useProducts();
+  
+  const filteredProducts = categorySlug && categorySlug !== 'all'
+    ? products.filter(p => p.category === categorySlug)
+    : products;
+
+  return {
+    data: filteredProducts,
+    isLoading,
+    error
+  };
+}
+
+// Fonction demandée par src/pages/Catalogue.tsx et Category.tsx
 export function filterAndSortProducts(
   products: Product[],
   category: string | null,
