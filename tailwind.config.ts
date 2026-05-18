@@ -6,14 +6,14 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: '#0084F1',    // Le beau bleu électrique Coolblue
-          hover: '#0066BC',      // Le bleu plus foncé quand on passe la souris
-          light: '#DFEFFF',      // Le bleu très clair pour les petits fonds
+          DEFAULT: '#0084F1',    // Bleu Coolblue
+          hover: '#0066BC',
+          light: '#DFEFFF',
         },
-        accent: '#FF7900',       // L'orange Coolblue
+        accent: '#FF7900',       // Orange Coolblue
         success: '#00A945',
         danger: '#D0021B',
-        orange: '#FF7900',       // Ton orange pour la loupe
+        orange: '#FF7900',
         page: '#F5F5F5',
         card: '#FFFFFF',
         border: '#E0E0E0',
@@ -28,7 +28,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Nunito', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'Nunito', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
         card: '0 2px 8px rgba(0, 0, 0, 0.06)',

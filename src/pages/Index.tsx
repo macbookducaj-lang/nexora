@@ -47,41 +47,28 @@ export function Index() {
 
   return (
     <>
-      {/* Banner Section - Style Coolblue Responsive */}
+      {/* Banner Section - Épurée sans image */}
       <section className="max-w-container mx-auto px-4 pt-6">
         <div className="relative bg-primary text-white rounded-2xl overflow-hidden shadow-md">
-          <div className="flex flex-col md:flex-row items-center justify-between p-6 sm:p-8 md:p-12 gap-8 min-h-[340px]">
-            {/* Texte de la bannière */}
-            <div className="flex-1 space-y-4 max-w-xl text-center md:text-left z-10">
-              <h1 className="text-3xl md:text-5xl font-bold tracking-tight">
-                Bienvenue chez Nexora
-              </h1>
-              <p className="text-lg md:text-xl text-white/95">
-                Les meilleures marques au meilleur prix
-              </p>
-              <div className="flex flex-wrap gap-x-4 gap-y-1 pt-2 text-sm text-white/80 justify-center md:justify-start font-medium">
-                <span>✓ Livraison gratuite dès 30€</span>
-                <span>✓ Retour 30 jours</span>
-                <span>✓ Paiement sécurisé</span>
-              </div>
-              <div className="pt-4">
-                <Link
-                  to="/catalogue"
-                  className="inline-flex items-center gap-2 bg-white text-primary hover:bg-neutral-100 font-bold px-6 py-3 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-sm"
-                >
-                  Voir tout le catalogue <ArrowRight size={18} />
-                </Link>
-              </div>
+          <div className="p-6 sm:p-10 md:p-16 text-center max-w-3xl mx-auto space-y-5">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+              Bienvenue chez Nexora
+            </h1>
+            <p className="text-lg md:text-xl text-white/90 max-w-xl mx-auto">
+              Les meilleures marques au meilleur prix
+            </p>
+            <div className="flex flex-wrap gap-x-6 gap-y-2 pt-2 text-sm text-white/80 justify-center font-medium">
+              <span>✓ Livraison gratuite dès 30€</span>
+              <span>✓ Retour 30 jours</span>
+              <span>✓ Paiement sécurisé</span>
             </div>
-
-            {/* Image de la bannière - Visible sur Mobile et PC */}
-            <div className="w-full md:w-1/2 h-48 sm:h-64 md:h-[280px] relative rounded-xl overflow-hidden shadow-inner">
-              <img
-                src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&h=400&fit=crop"
-                alt="Nexora Shop"
-                className="w-full h-full object-cover transform hover:scale-103 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-primary/10 to-transparent mix-blend-multiply" />
+            <div className="pt-4">
+              <Link
+                to="/catalogue"
+                className="inline-flex items-center gap-2 bg-white text-primary hover:bg-neutral-100 font-bold px-8 py-3.5 rounded-xl transition-all duration-200 transform hover:scale-105 shadow-sm text-base"
+              >
+                Voir tout le catalogue <ArrowRight size={18} />
+              </Link>
             </div>
           </div>
         </div>
