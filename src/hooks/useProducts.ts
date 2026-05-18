@@ -7,13 +7,11 @@ export function useProducts() {
   return useQuery({
     queryKey: PRODUCTS_KEY,
     queryFn: async (): Promise<Product[]> => {
-      // On demande un max de produits à l'API DummyJSON
       const response = await fetch('https://dummyjson.com/products?limit=100');
       if (!response.ok) throw new Error('Erreur lors de la récupération des produits de l\'API');
       
       const data = await response.json();
       
-      // On adapte les données pour qu'elles collent à la structure exacte attendue par ton ProductGrid
       return data.products.map((prod: any) => {
         let appCategory = 'accessoires';
         if (prod.category.includes('laptop')) appCategory = 'pc-portables';
@@ -23,7 +21,7 @@ export function useProducts() {
           id: `api-${prod.id}`,
           name: prod.title,
           description: prod.description,
-          price: Math.floor(prod.price * 0.9), // Petit ajustement de prix réaliste
+          price: Math.floor(prod.price * 0.9),
           image: prod.thumbnail,
           category: appCategory,
           brand: prod.brand || 'Générique',
@@ -33,6 +31,41 @@ export function useProducts() {
         };
       });
     },
-    staleTime: 1000 * 60 * 5, // Garde les données fraîches pendant 5 minutes
+    staleTime: 1000 * 60 * 5,
   });
+}
+
+// La fonction manquante réclamée par src/pages/Catalogue.tsx
+export function filterAndSortProducts(
+  products: Product[],
+  category: string | null,
+  brand: string | null,
+  search: string | null,
+  sort: string | null,
+  promo: string | null
+): Product[] {
+  let result = [...products];
+
+  if (category && category !== 'all') {
+    result = result.filter(p => p.category === category);
+  }
+  if (brand) {
+    result = result.filter(p => p.brand.toLowerCase() === brand.toLowerCase());
+  }
+  if (search) {
+    result = result.filter(p => p.name.toLowerCase().includes(search.toLowerCase()));
+  }
+  if (promo === '1') {
+    result = result.filter(p => p.isPromo);
+  }
+
+  if (sort === 'price-asc') {
+    result.sort((a, b) => a.price - b.price);
+  } else if (sort === 'price-desc') {
+    result.sort((a, b) => b.price - a.price);
+  } else if (sort === 'rating') {
+    result.sort((a, b) => b.rating - a.rating);
+  }
+
+  return result;
 }
