@@ -18,7 +18,7 @@ export function useProducts() {
         console.warn("L'API externe n'a pas répondu à temps.");
       }
 
-      // 1. Conversion des produits de l'API Fakestore (Écrans, Stockage, Audio)
+      // 1. Conversion des produits de l'API Fakestore
       const formattedApi = apiProducts.map((prod: any) => {
         let cat = 'accessoires';
         const titleLower = prod.title.toLowerCase();
@@ -39,23 +39,28 @@ export function useProducts() {
           brand: 'Tech Pro',
           rating: prod.rating?.rate || 4.4,
           isPromo: prod.id % 2 === 0,
-          featured: prod.rating?.rate >= 4.5
+          featured: prod.rating?.rate >= 4.5,
+          stock: 50,
+          inStock: true,
+          quantity: 50
         };
       });
 
-      // 2. Catalogue Premium Coolblue calé sur TES catégories en français
+      // 2. Catalogue Premium Coolblue
       const coolblueProducts: Product[] = [
         {
           id: 'cb-pc-1',
           name: 'ASUS Vivobook 15 - Intel Core i7 - 16 Go RAM - 512 Go SSD',
-          description: 'Ordinateur portable ultra-fin et performant, idéal pour le multitâche et le développement. Écran Full HD anti-reflets.',
+          description: 'Ordinateur portable ultra-fin et performant, idéal pour le multitâche. Écran Full HD anti-reflets.',
           price: 749,
           image: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&auto=format&fit=crop&q=80',
           category: 'ordinateurs',
           brand: 'ASUS',
           rating: 4.7,
           isPromo: true,
-          featured: true
+          featured: true,
+          stock: 25,
+          inStock: true
         },
         {
           id: 'cb-pc-2',
@@ -67,7 +72,9 @@ export function useProducts() {
           brand: 'Apple',
           rating: 4.9,
           isPromo: false,
-          featured: true
+          featured: true,
+          stock: 12,
+          inStock: true
         },
         {
           id: 'cb-tel-1',
@@ -79,7 +86,9 @@ export function useProducts() {
           brand: 'Apple',
           rating: 4.8,
           isPromo: false,
-          featured: true
+          featured: true,
+          stock: 18,
+          inStock: true
         },
         {
           id: 'cb-tel-2',
@@ -91,7 +100,9 @@ export function useProducts() {
           brand: 'Samsung',
           rating: 4.7,
           isPromo: true,
-          featured: false
+          featured: false,
+          stock: 30,
+          inStock: true
         },
         {
           id: 'cb-acc-1',
@@ -103,7 +114,9 @@ export function useProducts() {
           brand: 'Sony',
           rating: 4.9,
           isPromo: true,
-          featured: true
+          featured: true,
+          stock: 40,
+          inStock: true
         },
         {
           id: 'cb-acc-2',
@@ -115,7 +128,9 @@ export function useProducts() {
           brand: 'Logitech',
           rating: 4.8,
           isPromo: false,
-          featured: true
+          featured: true,
+          stock: 100,
+          inStock: true
         }
       ];
 
@@ -128,7 +143,7 @@ export function useProducts() {
 export function useProductsByCategory(categorySlug: string | undefined) {
   const { data: products = [], isLoading, error } = useProducts();
   
-  const filteredProducts = categorySlug && categorySlug !== 'all'
+  const filteredProducts = categorySlug && categorySlug.toLowerCase() !== 'all'
     ? products.filter(p => p.category.toLowerCase() === categorySlug.toLowerCase() || p.category.toLowerCase() === encodeURIComponent(categorySlug.toLowerCase()))
     : products;
 
@@ -149,7 +164,8 @@ export function filterAndSortProducts(
 ): Product[] {
   let result = [...products];
 
-  if (category && category !== 'all') {
+  // CORRECTION ICI : On ignore proprement le filtre si la catégorie vaut null ou 'all'
+  if (category && category.toLowerCase() !== 'all') {
     result = result.filter(p => p.category.toLowerCase() === category.toLowerCase());
   }
   if (brand) {
