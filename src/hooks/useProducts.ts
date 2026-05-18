@@ -10,38 +10,48 @@ export function useProducts() {
       let apiProducts: any[] = [];
       
       try {
-        // API d'électronique ultra-fiable (ne bloque jamais en Europe)
         const response = await fetch('https://fakestoreapi.com/products/category/electronics');
         if (response.ok) {
           apiProducts = await response.json();
         }
       } catch (e) {
-        console.warn("L'API externe a mis du temps à répondre, passage sur le catalogue direct.");
+        console.warn("L'API externe n'a pas répondu à temps.");
       }
 
-      // Conversion des produits de l'API avec des images propres
-      const formattedApi = apiProducts.map((prod: any) => ({
-        id: `fake-${prod.id}`,
-        name: prod.title,
-        description: prod.description,
-        price: Math.floor(prod.price),
-        image: prod.image,
-        category: 'accessoires',
-        brand: 'Tech Pro',
-        rating: prod.rating?.rate || 4.4,
-        isPromo: prod.id % 2 === 0,
-        featured: prod.rating?.rate >= 4.5
-      }));
+      // 1. Conversion des produits de l'API Fakestore (Écrans, Stockage, Audio)
+      const formattedApi = apiProducts.map((prod: any) => {
+        let cat = 'accessoires';
+        const titleLower = prod.title.toLowerCase();
+        
+        if (titleLower.includes('monitor') || titleLower.includes('screen') || titleLower.includes('tv')) {
+          cat = 'tv & audio';
+        } else if (titleLower.includes('drive') || titleLower.includes('ssd') || titleLower.includes('hard drive')) {
+          cat = 'accessoires'; 
+        }
 
-      // Vrais articles Tech style "Coolblue" (Haute Définition) pour remplir parfaitement tes catégories de l'Index
+        return {
+          id: `fake-${prod.id}`,
+          name: prod.title,
+          description: prod.description,
+          price: Math.floor(prod.price),
+          image: prod.image,
+          category: cat,
+          brand: 'Tech Pro',
+          rating: prod.rating?.rate || 4.4,
+          isPromo: prod.id % 2 === 0,
+          featured: prod.rating?.rate >= 4.5
+        };
+      });
+
+      // 2. Catalogue Premium Coolblue calé sur TES catégories en français
       const coolblueProducts: Product[] = [
         {
           id: 'cb-pc-1',
           name: 'ASUS Vivobook 15 - Intel Core i7 - 16 Go RAM - 512 Go SSD',
-          description: 'Ordinateur portable ultra-fin et performant, idéal pour le multitâche, le développement et le divertissement au quotidien. Écran Full HD anti-reflets.',
+          description: 'Ordinateur portable ultra-fin et performant, idéal pour le multitâche et le développement. Écran Full HD anti-reflets.',
           price: 749,
           image: 'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=600&auto=format&fit=crop&q=80',
-          category: 'pc-portables',
+          category: 'ordinateurs',
           brand: 'ASUS',
           rating: 4.7,
           isPromo: true,
@@ -49,11 +59,11 @@ export function useProducts() {
         },
         {
           id: 'cb-pc-2',
-          name: 'Apple MacBook Air 13" Puce M3 - 8 Go - 256 Go SSD - Noir Minuit',
-          description: 'Le portable le plus populaire d\'Apple revient avec la surpuissante puce M3. Autonomie incroyable de 18 heures et design totalement silencieux.',
+          name: 'Apple MacBook Air 13" Puce M3 - 8 Go - 256 Go SSD',
+          description: 'Le portable le plus populaire d\'Apple avec la surpuissante puce M3. Autonomie incroyable de 18 heures.',
           price: 1199,
           image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600&auto=format&fit=crop&q=80',
-          category: 'pc-portables',
+          category: 'ordinateurs',
           brand: 'Apple',
           rating: 4.9,
           isPromo: false,
@@ -62,10 +72,10 @@ export function useProducts() {
         {
           id: 'cb-tel-1',
           name: 'iPhone 15 Pro 128 Go - Titane Naturel',
-          description: 'Design robuste et léger en titane de qualité aérospatiale. Puce A17 Pro révolutionnaire. Système de caméra ultra-puissant.',
+          description: 'Design robuste et léger en titane de qualité aérospatiale. Puce A17 Pro révolutionnaire.',
           price: 1049,
           image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&auto=format&fit=crop&q=80',
-          category: 'smartphones',
+          category: 'téléphones',
           brand: 'Apple',
           rating: 4.8,
           isPromo: false,
@@ -73,11 +83,11 @@ export function useProducts() {
         },
         {
           id: 'cb-tel-2',
-          name: 'Samsung Galaxy S24 Ultra 256 Go - Noir Titane',
-          description: 'Bienvenue dans l\'ère de l\'accomplissement mobile avec Galaxy AI. Zoom optique exceptionnel et stylet S Pen intégré de série.',
+          name: 'Samsung Galaxy S24 Ultra 256 Go',
+          description: 'Bienvenue dans l\'ère de l\'accomplissement mobile avec Galaxy AI. Zoom optique exceptionnel.',
           price: 1249,
           image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&auto=format&fit=crop&q=80',
-          category: 'smartphones',
+          category: 'téléphones',
           brand: 'Samsung',
           rating: 4.7,
           isPromo: true,
@@ -85,31 +95,41 @@ export function useProducts() {
         },
         {
           id: 'cb-acc-1',
-          name: 'Sony WH-1000XM5 Casque Sans-fil à Réduction de Bruit',
-          description: 'La référence mondiale absolue du casque audio à réduction de bruit active. Son haute résolution exceptionnel et confort longue durée.',
+          name: 'Sony WH-1000XM5 Casque Sans-fil',
+          description: 'La référence mondiale absolue du casque audio à réduction de bruit active.',
           price: 299,
           image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80',
-          category: 'accessoires',
+          category: 'audio',
           brand: 'Sony',
           rating: 4.9,
           isPromo: true,
           featured: true
+        },
+        {
+          id: 'cb-acc-2',
+          name: 'Logitech MX Master 3S Souris Sans-Fil',
+          description: 'Souris ergonomique haute précision, idéale pour les développeurs et les créatifs.',
+          price: 109,
+          image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop&q=80',
+          category: 'accessoires',
+          brand: 'Logitech',
+          rating: 4.8,
+          isPromo: false,
+          featured: true
         }
       ];
 
-      // On fusionne le tout pour avoir un catalogue riche et 100% visible
       return [...coolblueProducts, ...formattedApi];
     },
     staleTime: 1000 * 60 * 5,
   });
 }
 
-// Hook demandé par src/pages/Category.tsx
 export function useProductsByCategory(categorySlug: string | undefined) {
   const { data: products = [], isLoading, error } = useProducts();
   
   const filteredProducts = categorySlug && categorySlug !== 'all'
-    ? products.filter(p => p.category === categorySlug)
+    ? products.filter(p => p.category.toLowerCase() === categorySlug.toLowerCase() || p.category.toLowerCase() === encodeURIComponent(categorySlug.toLowerCase()))
     : products;
 
   return {
@@ -119,7 +139,6 @@ export function useProductsByCategory(categorySlug: string | undefined) {
   };
 }
 
-// Fonction demandée par src/pages/Catalogue.tsx et Category.tsx
 export function filterAndSortProducts(
   products: Product[],
   category: string | null,
@@ -131,7 +150,7 @@ export function filterAndSortProducts(
   let result = [...products];
 
   if (category && category !== 'all') {
-    result = result.filter(p => p.category === category);
+    result = result.filter(p => p.category.toLowerCase() === category.toLowerCase());
   }
   if (brand) {
     result = result.filter(p => p.brand.toLowerCase() === brand.toLowerCase());
