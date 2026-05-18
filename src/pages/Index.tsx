@@ -1,6 +1,5 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
-import { Truck, RotateCcw, Shield, MessageCircle } from 'lucide-react';
+﻿import { Link, useNavigate } from 'react-router-dom';
+import { ArrowRight, Truck, RotateCcw, Shield, MessageCircle } from 'lucide-react';
 import { useProducts } from '../hooks/useProducts';
 import { ProductGrid } from '../components/ProductGrid';
 import { HOME_CATEGORIES, BRANDS } from '../data/categories';
@@ -37,17 +36,16 @@ function SectionHeader({
   );
 }
 
-export function Index() {
+export default function Index() {
   const navigate = useNavigate();
-  const { products, loading, getFeatured, getPromos, getNew } = useProducts();
+  const { data: products = [], isLoading } = useProducts();
 
-  const featured = getFeatured();
-  const promos = getPromos();
-  const newest = getNew();
+  const featured = products.filter((p: any) => p.featured || p.rating >= 4.5).slice(0, 4);
+  const promos = products.filter((p: any) => p.isPromo || p.oldPrice).slice(0, 4);
+  const newest = products.slice().reverse().slice(0, 4);
 
   return (
     <>
-      {/* Banner Section - Épurée sans image */}
       <section className="max-w-container mx-auto px-4 pt-6">
         <div className="relative bg-primary text-white rounded-2xl overflow-hidden shadow-md">
           <div className="p-6 sm:p-10 md:p-16 text-center max-w-3xl mx-auto space-y-5">
@@ -74,7 +72,6 @@ export function Index() {
         </div>
       </section>
 
-      {/* Catégories */}
       <section className="bg-white py-8 border-b border-border mt-8">
         <div className="max-w-container mx-auto px-4">
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -96,28 +93,21 @@ export function Index() {
         </div>
       </section>
 
-      {/* Sections de Produits */}
       <section className="max-w-container mx-auto px-4 py-10">
         <SectionHeader title="Meilleures ventes" linkTo="/catalogue" />
-        <ProductGrid products={featured} loading={loading} />
+        <ProductGrid products={featured} loading={isLoading} />
       </section>
 
       <section className="max-w-container mx-auto px-4 py-10">
-        <SectionHeader
-          title="🔥 Promotions"
-          subtitle={`${promos.length} offres en cours`}
-          linkTo="/catalogue?promo=1"
-          badge={`${promos.length} promos`}
-        />
-        <ProductGrid products={promos} loading={loading} />
+        <SectionHeader title="🔥 Promotions" linkTo="/catalogue?promo=1" />
+        <ProductGrid products={promos} loading={isLoading} />
       </section>
 
       <section className="max-w-container mx-auto px-4 py-10">
         <SectionHeader title="Nouveautés" linkTo="/catalogue?sort=newest" />
-        <ProductGrid products={newest} loading={loading} />
+        <ProductGrid products={newest} loading={isLoading} />
       </section>
 
-      {/* Marques */}
       <section className="bg-white py-8 border-y border-border">
         <div className="max-w-container mx-auto px-4">
           <h3 className="text-center font-bold text-muted mb-6">
@@ -128,9 +118,7 @@ export function Index() {
               <button
                 key={brand}
                 type="button"
-                onClick={() =>
-                  navigate(`/catalogue?brand=${encodeURIComponent(brand)}`)
-                }
+                onClick={() => navigate(`/catalogue?brand=${encodeURIComponent(brand)}`)}
                 className="text-xl font-bold text-gray-300 hover:text-primary transition-colors"
               >
                 {brand}
@@ -140,7 +128,6 @@ export function Index() {
         </div>
       </section>
 
-      {/* Réassurance */}
       <section className="bg-white py-10">
         <div className="max-w-container mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {[

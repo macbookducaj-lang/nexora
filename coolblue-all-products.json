@@ -1,0 +1,24 @@
+[
+  {
+    "id": "cb-1779093809959-1",
+    "name": "Fiche d'information sur le produit\ns'ouvre dans un nouvel onglet",
+    "description": "Achetez votre Fiche d'information sur le produit\ns'ouvre dans un nouvel onglet au meilleur prix chez Nexora.",
+    "price": 96992910,
+    "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12",
+    "category": "smartphones",
+    "brand": "Fiche",
+    "rating": 4.5,
+    "isPromo": false
+  },
+  {
+    "id": "cb-1779093809959-22",
+    "name": "Jusqu'à 395 € de valeur de reprise",
+    "description": "Achetez votre Jusqu'à 395 € de valeur de reprise au meilleur prix chez Nexora.",
+    "price": 132911,
+    "image": "https://images.unsplash.com/photo-1546868871-7041f2a55e12",
+    "category": "smartphones",
+    "brand": "Jusqu'à",
+    "rating": 4.5,
+    "isPromo": false
+  }
+]
