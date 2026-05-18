@@ -1,8 +1,8 @@
-import { useState } from 'react';
+﻿import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { AuthModal } from './components/AuthModal';
-import { Index } from './pages/Index';
+import Index from './pages/Index';
 import { Catalogue } from './pages/Catalogue';
 import { Category } from './pages/Category';
 import { ProductDetail } from './pages/ProductDetail';
