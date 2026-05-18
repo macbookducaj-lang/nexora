@@ -32,15 +32,24 @@ export function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-bold mb-3">Service client</h4>
-            <ul className="space-y-2 text-sm text-white/80">
-              <li>Livraison</li>
-              <li>Retours</li>
-              <li>Garantie 2 ans</li>
-              <li>Contact</li>
-              <li>FAQ</li>
-            </ul>
-          </div>
+          <h4 className="font-bold mb-3">Service client</h4>
+          <ul className="space-y-2 text-sm text-white/80">
+            <li><Link to="/livraison" className="hover:underline">Livraison</Link></li>
+            <li><Link to="/retours" className="hover:underline">Retours</Link></li>
+            <li><Link to="/garantie" className="hover:underline">Garantie 2 ans</Link></li>
+            <li>
+              <a href="mailto:Nexora.irish@proton.me" className="hover:underline text-white">
+                Contact : Nexora.irish@proton.me
+              </a>
+            </li>
+            <li>
+              <a href="tel:+33754019600" className="hover:underline text-orange-500 font-semibold">
+                Tél : +33 7 54 01 96 00
+              </a>
+            </li>
+            <li><Link to="/faq" className="hover:underline">FAQ</Link></li>
+          </ul>
+        </div>
           <div>
             <h4 className="font-bold mb-3">Newsletter</h4>
             <p className="text-sm text-white/80 mb-3">Recevez nos offres exclusives</p>
@@ -63,7 +72,13 @@ export function Footer() {
         </div>
         <div className="border-t border-white/20 mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
           <span>© {new Date().getFullYear()} NEXORA. Tous droits réservés.</span>
-          <span>Mentions légales · CGV · Confidentialité</span>
+          <span className="flex gap-3 justify-center">
+            <Link to="/mentions-legales" className="hover:underline">Mentions légales</Link>
+            <span>·</span>
+            <Link to="/cgv" className="hover:underline">CGV</Link>
+            <span>·</span>
+            <Link to="/confidentialite" className="hover:underline">Confidentialité</Link>
+          </span>
           <span className="flex gap-2 items-center">Visa · Mastercard · Stripe</span>
         </div>
       </div>

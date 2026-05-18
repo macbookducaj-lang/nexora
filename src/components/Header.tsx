@@ -44,7 +44,7 @@ export function Header({ onAuthClick }: HeaderProps) {
           <SearchBar className="hidden md:flex flex-1 max-w-[65%] mx-auto" />
 
           <div className="flex items-center gap-3 ml-auto">
-            <div className="relative hidden sm:block" ref={accountRef}>
+          <div className="relative block" ref={accountRef}>
               {user ? (
                 <>
                   <button
@@ -53,7 +53,7 @@ export function Header({ onAuthClick }: HeaderProps) {
                     className="flex flex-col items-center text-xs hover:text-primary transition-colors"
                   >
                     <User size={22} />
-                    <span className="flex items-center gap-0.5">
+                    <span className="hidden md:inline-flex items-center gap-0.5">
                       Mon compte <ChevronDown size={12} />
                     </span>
                   </button>
@@ -107,10 +107,10 @@ export function Header({ onAuthClick }: HeaderProps) {
 
             <Link
               to="/account/favoris"
-              className="hidden sm:flex flex-col items-center text-xs hover:text-primary transition-colors"
+              className="flex flex-col items-center text-xs hover:text-primary transition-colors"
             >
               <Heart size={22} />
-              <span>Favoris</span>
+              <span className="hidden md:block">Favoris</span>
             </Link>
 
             <button

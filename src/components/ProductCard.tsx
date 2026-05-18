@@ -106,7 +106,7 @@ export function ProductCard({ product, listView = false, index = 0 }: ProductCar
           {inStock ? '✓ En stock' : 'Rupture de stock'}
         </p>
       </div>
-      <div className={cn('flex gap-2 mt-auto', listView ? 'mt-4' : 'pt-4')}>
+      <div className={cn('flex flex-col sm:flex-row gap-2 mt-auto' listView ? 'mt-4' : 'pt-4')}>
         <button
           type="button"
           onClick={handleFav}
